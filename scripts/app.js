@@ -1,38 +1,60 @@
 const myHeading = document.querySelector('h1');
 myHeading.textContent = 'TIC TAC TOE';
 
-document.querySelectorAll('td')
-.forEach(element => element.addEventListener("click", function(event) {
-    // Here, `this` refers to the element the event was hooked on
-    //click to get event.target.id
-    //use that val to look up matrix position
-    //add select input to matrix position -- x or o
-    console.log("clicked", event.target.id)
-  }
-));
+// document.querySelectorAll('td')
+// .forEach(element => element.addEventListener("click", function(event) {
+//     // Here, `this` refers to the element the event was hooked on
+//     //click to get event.target.id
+//     //use that val to look up matrix position
+//     //add select input to matrix position -- x or o
+//     //console.log("clicked", event.target.id)
+//   }
+// ));
 
 document.querySelectorAll('select')
 .forEach(element => element.addEventListener('change', (event) => {
     var selected = event.target.value; //THIS GET THE X OR O!
-    console.log('selected:', selected)
+    //console.log('selected:', selected)
     var location = element.closest('td').id.toString();
-    console.log(location)
+    //console.log(location)
     var position = tableMap[location];
-    console.log(position)
+    //console.log(position)
     matrix[position[0]][position[1]] = selected;
-  }));
+    checkRows(matrix, selected);
+  }
+));
 
 
-// selectElement.addEventListener('change', (event) => {
-//   const result = document.querySelector('.result');
-//   result.textContent = `You like ${event.target.value}`;
-// });
+function checkCombos(matrix, selected) {
+  for (var row of matrix) {
+    for (var element of row) {
+      if (element === selected) {
+        alert(`${selected} won!`)
+      }
+    }
+  }
+}
 
-// function update() {
-//   var select = document.getElementById('1A');
-//   var option = select.options[select.selectedIndex];
-//   console.log(option)
-// }
+function checkRows(matrix, selected) {
+  var current = selected;
+  for (var i = 0; i < matrix.length; i++) {
+    //console.log(i, matrix[i]);
+    var hasMatch = true;
+    for (var j = 0; j < matrix[i].length; j++) {
+      //console.log('j:', j , matrix[i][j]);
+      if (matrix[i][j] !== selected) {
+        hasMatch = false;
+      }
+    }
+    if (hasMatch) {
+      console.log('match!');
+      alert(`${selected} won!`)
+      break;
+    }
+  }
+}
+
+
 
 var row1 = new Array(3);
 var row2 = new Array(3);
@@ -67,11 +89,6 @@ var tableMap = {
 3B = matrix[2][1]
 3C = matrix[2][2]
 */
-
-var dogs = {
-  soren: 'blonde'
-}
-
 
 
 //could collect in matrix
